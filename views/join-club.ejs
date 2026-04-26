@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles/main.css" />
+</head>
+<body>
+
+  <%- include('partials/nav') %>
+
+  <main class="main">
+    <div class="page-top">
+      <h1 class="page-title">Join The Club</h1>
+    </div>
+
+    <p class="join-desc">
+      Got the passcode? Enter it below. Members can see who wrote
+      every post and when it was posted.
+    </p>
+
+    <% if (error) { %>
+      <ul class="error-list">
+        <li><%= error %></li>
+      </ul>
+    <% } %>
+
+    <form class="site-form" method="POST" action="/join">
+      <div class="form-group">
+        <label for="passcode">Secret Passcode</label>
+        <input
+          type="password"
+          id="passcode"
+          name="passcode"
+          placeholder="Enter the passcode"
+          required
+        />
+      </div>
+      <button type="submit" class="submit-btn">Join</button>
+    </form>
+  </main>
+
+</body>
+</html>
