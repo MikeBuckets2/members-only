@@ -1,0 +1,17 @@
+<header class="site-header">
+  <a href="/" class="site-logo">THE CLUB.</a>
+  <nav class="header-nav">
+    <% if (user) { %>
+      <% if (!user.is_member && !user.is_admin) { %>
+        <a href="/join" class="header-btn">Join the Club</a>
+      <% } %>
+      <a href="/messages/new" class="header-btn">+ Post</a>
+      <form method="POST" action="/logout" class="logout-form">
+        <button type="submit" class="header-btn header-logout">Log Out</button>
+      </form>
+    <% } else { %>
+      <a href="/sign-up" class="header-btn">Sign Up</a>
+      <a href="/login" class="header-btn">Log In</a>
+    <% } %>
+  </nav>
+</header>
