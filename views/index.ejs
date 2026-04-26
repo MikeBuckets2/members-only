@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles/main.css" />
+</head>
+<body>
+
+  <%- include('partials/nav') %>
+
+  <main class="main">
+    <div class="page-top">
+      <h1 class="page-title">All Posts</h1>
+      <span class="page-count"><%= messages.length %> messages</span>
+    </div>
+
+    <% if (!user) { %>
+      <div class="info-banner">
+        <p>
+          Reading as a guest. Authors are hidden until you
+          <a href="/sign-up">sign up</a> and join the club.
+        </p>
+      </div>
+    <% } else if (!user.is_member && !user.is_admin) { %>
+      <div class="info-banner">
+        <p>
+          You're logged in but not a member yet.
+          <a href="/join">Join the club</a> to see who posted what.
+        </p>
+      </div>
+    <% } %>
+
+    <% if (messages.length === 0) { %>
+      <p class="empty-state">Nothing here yet. Be the first to post.</p>
+    <% } else { %>
+      <div class="message-list">
+        <% messages.forEach(function(message) { %>
+          <div class="message-card">
+            <div class="message-card-top">
+              <h2 class="message-title"><%= message.title %></h2>
+              <% if (user && (user.is_member || user.is_admin)) { %>
+                <div class="message-meta">
+                  <span class="message-author">
+                    <%= message.first_name %> <%= message.last_name %>
+                  </span>
+                  <span class="message-date">
+                    <%= new Date(message.created_at).toLocaleDateString('en-US', {
+                      month: 'short', day: 'numeric', year: 'numeric'
+                    }) %>
+                  </span>
+                </div>
+              <% } else { %>
+                <div class="message-meta">
+                  <span class="message-anon">Anonymous</span>
+                </div>
+              <% } %>
+            </div>
+            <p class="message-text"><%= message.text %></p>
+            <% if (user && user.is_admin) { %>
+              <form method="POST" action="/messages/<%= message.id %>/delete" class="delete-form">
+                <button type="submit" class="delete-btn">Delete</button>
+              </form>
+            <% } %>
+          </div>
+        <% }); %>
+      </div>
+    <% } %>
+  </main>
+
+</body>
+</html>
