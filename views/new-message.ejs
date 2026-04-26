@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles/main.css" />
+</head>
+<body>
+
+  <%- include('partials/nav') %>
+
+  <main class="main">
+    <div class="page-top">
+      <h1 class="page-title">New Post</h1>
+    </div>
+
+    <% if (errors.length > 0) { %>
+      <ul class="error-list">
+        <% errors.forEach(function(err) { %>
+          <li><%= err.msg %></li>
+        <% }); %>
+      </ul>
+    <% } %>
+
+    <form class="site-form" method="POST" action="/messages/new">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value="<%= formData.title || '' %>"
+          placeholder="What's on your mind?"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="text">Message</label>
+        <textarea
+          id="text"
+          name="text"
+          placeholder="Say something..."
+          required
+        ><%= formData.text || '' %></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Post</button>
+    </form>
+  </main>
+
+</body>
+</html>
